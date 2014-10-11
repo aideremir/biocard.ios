@@ -21,33 +21,58 @@
 var app = {
     // Application Constructor
     init: function () {
+        this.bindMenuEvents();
 
 
+    },
+
+    onShowPage: function(pageId)
+    {
+        console.log(pageId);
+
+    },
+
+
+    bindMenuEvents: function()
+    {
         var footer = document.getElementById('footer');
         var footerMenuItems = footer.querySelectorAll('.mainMenu li');
-        var pageId = '', menuItem = null;
+        var pageId = '', menuItem = null, _self = this;
 
 
         for(i=0;i < footerMenuItems.length; i++)
         {
             menuItem = footerMenuItems[i];
 
-            menuItem.ontouchend = function()
+            menuItem.ontouchstart = menuItem.onclick = function()
             {
                 var pageId = this.dataset.action;
+                var siblings = this.parentNode.childNodes;
 
-                app.showPage(pageId);
+
+
+                for(i=0;i < siblings.length; i++)
+                {
+                    if(siblings[i].nodeName == 'LI'){
+                        siblings[i].classList.remove('active');
+                    }
+                }
+
+                this.classList.add('active');
+
+                _self.showPage(pageId);
 
             }
         }
-
-
 
     },
 
     showPage: function(pageId)
     {
         var allPages = document.querySelectorAll('.page');
+        var event = new CustomEvent('show-' + pageId);
+
+        document.addEventListener('show-' + pageId, this.onShowPage(pageId), false);
 
         for(i=0;i < allPages.length; i++)
         {
@@ -55,6 +80,10 @@ var app = {
         }
 
         document.getElementById(pageId).classList.add('current');
+
+        document.dispatchEvent(event);
+
+
 
     }
 };

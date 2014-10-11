@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.phonegap.biocard.ios" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Biocard</name>
     <description>
-        Biocard mobile application.
+        Biocard IOS mobile application.
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
         PhoneGap Team
