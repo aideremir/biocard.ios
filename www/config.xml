@@ -5,11 +5,11 @@
         Biocard IOS mobile application.
     </description>
     <author email="aideremir@gmail.com" href="http://emirit.ru">
-        PhoneGap Team
+        EmirIT
     </author>
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.5.0" />
-    <preference name="orientation" value="default" />
+    <preference name="orientation" value="portrait" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
@@ -69,5 +69,7 @@
     <gap:splash gap:platform="ios" height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
 
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
+
     <access origin="*" />
+
 </widget>

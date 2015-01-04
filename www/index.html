@@ -20,72 +20,145 @@
     under the License.
 -->
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Biocard</title>
-    </head>
-    <body>
-        <div class="app" id="deviceready">
-            <div id="header">
-                <div class="profile">
-                    <i class="fa fa-2x fa-user"></i>
-                </div>
-            </div>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="msapplication-tap-highlight" content="no"/>
+	<!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi"/>
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<title>Biocard</title>
+</head>
+<body>
+<div class="app" id="deviceready">
+	<div id="header">
+		<div class="profile">
+			<i data-action="profile" id="profile-button" class="button fa fa-2x fa-user"></i>
+		</div>
+	</div>
 
-            <div id="content">
-                <!-- main content -->
-                <div class="page current nopadding" id="login">
-                    <!--ul class="mainMenu">
-                        <li data-action="news"><div class="icon"><i class="fa fa-3x fa-newspaper-o"></i></div> <div class="label">News <i style="float: right; color: #cacaca" class="fa fa-2x fa-chevron-right"></i></div></li>
-                        <li data-action="tracking"><div class="icon"><i class="fa fa-3x fa-map-marker"></i></div> <div class="label">Tracking <i style="float: right; color: #cacaca" class="fa fa-2x fa-chevron-right"></i></div></li>
-                        <li data-action="order"><div class="icon"><i class="fa fa-3x fa-file-text-o"></i></div> <div class="label">Place an Order <i style="float: right; color: #cacaca" class="fa fa-2x fa-chevron-right"></i></div></li>
-                        <li data-action="contacts"><div class="icon"><i class="fa fa-3x fa-envelope-o"></i></div> <div class="label">Contacts <i style="float: right; color: #cacaca" class="fa fa-2x fa-chevron-right"></i></div></li>
-                        <li data-action="calculator"><div class="icon"><i class="fa fa-3x fa-calculator"></i></div> <div class="label">Tariffs Calculator <i style="float: right; color: #cacaca" class="fa fa-2x fa-chevron-right"></i></div></li>
-                    </ul-->
+	<div id="content">
+		<!-- main content -->
+		<div class="page" id="profile">
+			<h1>Profile</h1>
+			<div class="content">
+				<form class="form logoutForm">
+					<p>
+						<span>You logged in as <b class="loginLabel"></b></span>
+					</p>
+					<button type="button" id="logout">Logout</button>
+				</form>
 
-                </div>
+			</div>
+		</div>
 
-                <div class="page" id="news">
-                    <h1>News</h1>
-                </div>
-                <div class="page" id="tracking">
-                    <h1>Tracking</h1>
-                </div>
-                <div class="page" id="order">
-                    <h1>Order</h1>
-                </div>
-                <div class="page" id="contacts">
-                    <h1>Contacts</h1>
-                </div>
-                <div class="page" id="calculator">
-                    <h1>Calculator</h1>
-                </div>
+		<div class="page current" id="login">
+			<h1>Login</h1>
 
-            </div>
+			<div class="content">
+				<form class="form loginForm">
+					<p>
+						<input placeholder="Login" type="text" name="login" id="loginInput">
+					</p>
 
-            <div id="footer">
-                <ul class="mainMenu">
-                    <li data-action="news"><a href="#"><i class="fa fa-2x fa-newspaper-o"></i><br>news</a></li>
-                    <li data-action="tracking"><a href="#"><i class="fa fa-2x fa-map-marker"></i><br>tracking</a></li>
-                    <li data-action="order"><a href="#"><i class="fa fa-2x fa-file-text-o"></i><br>order</a></li>
-                    <li data-action="contacts"><a href="#"><i class="fa fa-2x fa-envelope-o"></i><br>contacts</a></li>
-                    <li data-action="calculator" class="last"><a href="#"><i class="fa fa-2x fa-calculator"></i><br>calculator</a></li>
-                </ul>
+					<p>
+						<input placeholder="Password" type="password" name="password" id="passwordInput">
+					</p>
 
-            </div>
+					<p>
+						<button type="submit">Login</button>
+					</p>
+				</form>
+			</div>
+		</div>
+		<div class="page" id="news">
+			<h1>News</h1>
+
+			<div class="content"></div>
+		</div>
+		<div class="page current" id="tracking">
+			<h1>Tracking</h1>
+
+			<div class="content">
+				<form class="form">
+					<p style="overflow: hidden">
+						<label>From:</label><input placeholder="Date From" name="dateFrom" id="dateFrom" type="date" style="float: right">
+					</p>
+					<p style="overflow: hidden">
+						<label>To:</label><input placeholder="Date To" name="dateTo" id="dateTo" type="date" style="float: right" >
+					</p>
+					<p>
+						<input placeholder="code" name="code" id="code">
+					</p>
+					<p>
+						<input placeholder="address" name="address" id="address">
+					</p>
+					<div class="radios">
+						<div class="left checked" data-value="all">All</div>
+						<div class="center" data-value="delivered">Delivered</div>
+						<div class="right" data-value="undelivered">Undelivered</div>
+						<input type="hidden" name="orderType" id="orderType" value="all">
+					</div>
+					<p>
+						<button type="submit">OK</button>
+					</p>
+
+				</form>
+			</div>
+		</div>
+		<div class="page" id="order">
+			<h1>Order</h1>
+
+			<div class="content"></div>
+		</div>
+		<div class="page" id="contacts">
+			<h1>Contacts</h1>
+
+			<div class="content"></div>
+		</div>
+		<div class="page" id="calculator">
+			<h1>Calculator</h1>
+
+			<div class="content"></div>
+		</div>
 
 
-        </div>
+		<div class="spinnerContainer">
+			<i class="fa fa-spinner fa-spin fa-5x"></i>
+		</div>
+
+	</div>
+
+	<div id="footer">
+		<ul class="mainMenu">
+			<li data-action="news"><a href="#"><i class="fa fa-2x fa-newspaper-o"></i><br>news</a></li>
+			<li class="active" data-action="tracking"><a href="#"><i class="fa fa-2x fa-map-marker"></i><br>tracking</a></li>
+			<li data-action="order"><a href="#"><i class="fa fa-2x fa-file-text-o"></i><br>order</a></li>
+			<li data-action="contacts"><a href="#"><i class="fa fa-2x fa-envelope-o"></i><br>contacts</a></li>
+			<li data-action="calculator" class="last">
+				<a href="#"><i class="fa fa-2x fa-calculator"></i><br>calculator</a></li>
+		</ul>
+
+	</div>
 
 
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+	<div id="popup-container" class="hidden">
+		<div class="popup">
+			<div class="close"><i class="fa fa-2x fa-close"></i></div>
+			<div class="content">
 
-    </body>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+<!--script type="text/javascript" src="cordova.js"></script-->
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+</body>
 </html>

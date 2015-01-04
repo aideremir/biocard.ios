@@ -1,210 +1,199 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 * {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
-}
+  -webkit-tap-highlight-color: transparent;
+  /* make transparent link selection, adjust last value opacity 0 to 1.0 */ }
 
 body {
-    -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
-    -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color: #E4E4E4;
-    background-image: linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image: -webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image: -ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #A7A7A7), color-stop(0.51, #E4E4E4));
-    background-attachment: fixed;
-    font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-    text-transform: uppercase;
-    width: 100%;
-
-}
-
-/* Portrait layout (default) */
-.app {
+  -webkit-touch-callout: none;
+  /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none;
+  /* prevent webkit from resizing text to fit */
+  -webkit-user-select: none;
+  /* prevent copy paste, to allow, change 'none' to 'text' */
+  background-color: #E4E4E4;
+  background-image: linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+  background-image: -webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+  background-image: -ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #A7A7A7), color-stop(0.51, #E4E4E4));
+  background-attachment: fixed;
+  font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  text-transform: uppercase;
+  width: 100%;
+  /* Portrait layout (default) */ }
+  body .app {
     position: absolute;
     width: 100%;
     top: 0;
     bottom: 0;
-    height: 100%;
-}
-
-.app #header {
-    position: absolute;
-
-    width: 100%;
-    top: 0;
-    bottom: 90%;
-
-    background: #660000 url('../img/logo.svg') 50% 70% no-repeat;
-    background-size: 80% 40%;
-}
-
-#header .profile {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    color: #fff;
-    padding: 6px 10px;
-}
-
-#header .profile:active {
-    color: #ffbbbb;
-}
-
-
-.app #content {
-    position: absolute;
-    background: #fff;
-    width: 100%;
-
-    top: 10%;
-    bottom: 10%;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-}
-
-.app #footer {
-    position: absolute;
-    bottom: 0;
-    top: 90%;
-    width: 100%;
-    background: #660000;
-}
-
-#content .page {
-    padding:0 10px;
-    box-sizing: border-box;
-    background: #FFF;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    bottom: 0;
-    opacity: 0;
-    -webkit-transform: translate(0,100%);
-    -webkit-transition: all 0.25s ease-in-out;
-}
-
-#content .page.current {
-    opacity: 1;
-    -webkit-transform: translate(0, 0) !important;
-}
-
-#content .page.nopadding {
-    padding: 0;
-}
-
-
-#content .mainMenu {
-    display: block;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-}
-
-#content .mainMenu li {
-    display: block;
-    padding: 10px;
-    border-bottom: 1px solid rgba(102,0,0,0.3);
-    color: #660000;
-    overflow: hidden;
-}
-
-#content .mainMenu li:active {
-    background: #eeeeee;
-}
-
-#content .mainMenu li .icon {
-    display: block;
-    width: 80px;
-    float: left;
-    text-align: center;
-}
-
-#content .mainMenu li .label {
-    display: block;
-
-    padding-top: 10px;
-}
-
-
-
-
-
-
-#footer .mainMenu {
-    display: block;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    overflow: hidden;
-}
-
-#footer .mainMenu li {
-    display: block;
-    float: left;
-
-    padding: 10px;
-    margin: 0;
-    width: 20%;
-    box-sizing: border-box;
-    text-align: center;
-    color: #fff;
-    border-right: 1px solid #ffbbbb;
-}
-
-#footer .mainMenu li:active, #footer .mainMenu li.active {
-    background: #ffbbbb;
-    color: #660000;
-}
-
-#footer .mainMenu li.last {
-    border: none;
-}
-
-#footer .mainMenu li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 8px;
-    line-height: 20px;
-}
-
-#footer .mainMenu li:active a, #footer .mainMenu li.active a {
-    color: #660000;
-}
-
-
-/* Landscape layout (with min-width) */
-@media screen and (min-aspect-ratio: 1/1) and (min-width: 400px) {
-    .app {
+    height: 100%; }
+    body .app #popup-container {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1; }
+      body .app #popup-container .popup {
+        width: 250px;
+        height: 250px;
         position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: #fff;
+        border: 1px solid #660000;
+        margin-left: -125px;
+        margin-top: -125px; }
+        body .app #popup-container .popup .content {
+          padding: 0 20px; }
+        body .app #popup-container .popup .close {
+          margin: 10px 10px;
+          text-align: right;
+          color: #660000; }
+    body .app #header {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      bottom: 90%;
+      background: #660000 url("../img/logo.svg") 50% 70% no-repeat;
+      background-size: 80% 40%; }
+      body .app #header .profile {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        color: #fff;
+        padding: 6px 10px; }
+      body .app #header .profile:active {
+        color: #ffbbbb; }
+    body .app #content {
+      position: absolute;
+      background: #fff;
+      width: 100%;
+      top: 10%;
+      bottom: 10%;
+      overflow: hidden;
+      -webkit-overflow-scrolling: touch; }
+      body .app #content .spinnerContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50px;
+        height: 50px;
+        margin-left: -25px;
+        margin-top: -25px;
+        display: none; }
+      body .app #content .page {
+        padding: 0 10px;
+        box-sizing: border-box;
+        background: #FFF;
+        position: absolute;
+        top: 0;
         width: 100%;
+        bottom: 0;
+        overflow: scroll;
+        -webkit-transform: translate(0, 100%);
+        -webkit-transition: all 0.25s ease-in-out; }
+        body .app #content .page.current {
+          -webkit-transform: translate(0, 0) !important; }
+        body .app #content .page.nopadding {
+          padding: 0; }
+    body .app #footer {
+      position: absolute;
+      bottom: 0;
+      top: 90%;
+      width: 100%;
+      background: #660000; }
+      body .app #footer .mainMenu {
+        display: block;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        position: absolute;
         top: 0;
         bottom: 0;
-    }
-}
+        overflow: hidden; }
+        body .app #footer .mainMenu li {
+          display: block;
+          float: left;
+          padding: 10px;
+          margin: 0;
+          width: 20%;
+          box-sizing: border-box;
+          text-align: center;
+          color: #fff;
+          border-right: 1px solid #ffbbbb; }
+          body .app #footer .mainMenu li:active {
+            background: #ffbbbb;
+            color: #660000; }
+            body .app #footer .mainMenu li:active a {
+              color: #660000; }
+          body .app #footer .mainMenu li.active {
+            background: #ffbbbb;
+            color: #660000; }
+            body .app #footer .mainMenu li.active a {
+              color: #660000; }
+          body .app #footer .mainMenu li .last {
+            border: none; }
+          body .app #footer .mainMenu li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 8px;
+            line-height: 20px; }
+    body .app #news .item {
+      padding: 20px 0;
+      border-bottom: 1px solid #dddddd; }
+      body .app #news .item .date {
+        font-style: italic; }
+    body .app .hidden {
+      opacity: 0;
+      -webkit-transition: all 0.25s ease-in-out;
+      z-index: -1; }
+    body .app .form {
+      display: block; }
+      body .app .form .radios {
+        overflow: hidden;
+        margin-bottom: 20px; }
+        body .app .form .radios div {
+          padding: 10px 0;
+          -webkit-transition: all 0.25s ease-in-out; }
+        body .app .form .radios .left {
+          width: 30%;
+          float: left;
+          text-align: center; }
+        body .app .form .radios .center {
+          width: 30%;
+          float: left;
+          text-align: center; }
+        body .app .form .radios .right {
+          width: 30%;
+          float: right;
+          text-align: center; }
+        body .app .form .radios .checked {
+          background-color: #660000;
+          color: #fff; }
+      body .app .form input {
+        width: 100%;
+        border: 1px solid #660000;
+        font-size: 16px;
+        height: 40px;
+        margin-bottom: 10px;
+        padding: 0;
+        border-radius: 0; }
+      body .app .form button {
+        width: 100%;
+        background-color: #660000;
+        color: #fff;
+        font-size: 16px;
+        height: 40px;
+        text-transform: uppercase;
+        border-radius: 0;
+        border: 1px solid #660000; }
+        body .app .form button:active {
+          background: #ffbbbb;
+          color: #660000; }
+
+/*# sourceMappingURL=index.css.map */
