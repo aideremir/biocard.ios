@@ -85,6 +85,19 @@ body {
         color: #ffbbbb;
       }
 
+      .back {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        color: #fff;
+        padding: 6px 10px;
+        display: none;
+      }
+
+      .back:active {
+        color: #ffbbbb;
+      }
+
     }
 
     #content {
@@ -100,14 +113,24 @@ body {
       .spinnerContainer {
 
         position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 50px;
-        height: 50px;
-        margin-left: -25px;
-        margin-top: -25px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        background-color: rgba(255,255,255, 0.8);
 
         display: none;
+
+        i {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 50px;
+          height: 50px;
+          margin-left: -25px;
+          margin-top: -25px;
+        }
       }
 
       .page {
@@ -121,6 +144,10 @@ body {
         overflow: scroll;
         -webkit-transform: translate(0, 100%);
         -webkit-transition: all 0.25s ease-in-out;
+
+        &.fromRight {
+          -webkit-transform: translate(100%, 0);
+        }
 
         &.current {
           //display: block;
@@ -205,6 +232,121 @@ body {
 
         .date {
           font-style: italic;
+        }
+      }
+    }
+
+    #trackingResultsMap {
+      .menu {
+        display: block;
+
+        .item {
+          width: 50%;
+          float: left;
+          text-align: center;
+          color: #660000;
+
+          &.current {
+            background-color: #660000;
+          }
+        }
+
+        padding: 7px 0;
+        border-bottom: 1px solid #660000;
+        overflow: hidden;
+      }
+
+      .wrap {
+        position: absolute;
+        bottom: 0;
+        top: 31px;
+        left: 0;
+        right: 0;
+      }
+    }
+
+    #trackingResultsList {
+        width: 100%;
+
+      .menu {
+        display: block;
+
+        .item {
+          width: 50%;
+          float: left;
+          text-align: center;
+          color: #660000;
+
+          &.current {
+            background-color: #660000;
+          }
+        }
+
+        padding: 7px 0;
+        border-bottom: 1px solid #660000;
+        overflow: hidden;
+      }
+
+        .orderItem {
+          position: relative;
+          padding: 20px 5px;
+          border-bottom: 1px solid #aaaaaa;
+
+          &:active {
+            color: #fff;
+            background-color: #660000;
+
+            .toCompany {
+              color: #fff;
+            }
+
+            i {
+              color: #fff;
+            }
+          }
+
+
+          .orderNo {
+            font-weight: bold;
+            margin-right: 10px;
+          }
+
+          .toCompany {
+            color: #666666;
+          }
+
+          i {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            margin-top: -6px;
+            color: #660000;
+          }
+        }
+
+
+
+
+      }
+
+    #orderCard {
+      .content {
+        table {
+          width: 100%;
+
+          border-collapse: collapse;
+
+          tr {
+            &:nth-child(2n){
+              background-color: #eeeeee;
+            }
+
+            td {
+              width: 50%;
+              padding: 10px 5px;
+              vertical-align: top;
+            }
+          }
         }
       }
     }

@@ -27,6 +27,7 @@
 	<!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
 	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi"/>
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+
 	<link rel="stylesheet" type="text/css" href="css/index.css"/>
 	<title>Biocard</title>
 </head>
@@ -36,13 +37,47 @@
 		<div class="profile">
 			<i data-action="profile" id="profile-button" class="button fa fa-2x fa-user"></i>
 		</div>
+		<div class="back">
+			<i id="back-button" class="button fa fa-2x fa-chevron-left"></i>
+		</div>
+
+
 	</div>
+
+
 
 	<div id="content">
 		<!-- main content -->
-		<div class="page" id="profile">
+		<div class="page" data-level="2" id="profile">
 			<h1>Profile</h1>
 			<div class="content">
+
+				<form class="form profileForm" id="profileDataForm">
+					<p>
+						<label>Sender Company name</label>
+						<input type="text"  id="senderCompanyName" placeholder="Sender Company name">
+					</p>
+					<p>
+						<label>Sender Person name</label>
+						<input type="text"  id="senderPersonName" placeholder="Sender Person name">
+					</p>
+					<p>
+						<label>Sender city</label>
+						<input type="text"  id="senderCity" placeholder="Sender city">
+					</p>
+					<p>
+						<label>Sender address</label>
+						<input type="text"  id="senderAddress" placeholder="Sender address">
+					</p>
+					<p>
+						<label>Sender phone</label>
+						<input type="text"  id="senderPhone" placeholder="Sender phone">
+					</p>
+					<button type="submit">Save</button>
+				</form>
+
+
+
 				<form class="form logoutForm">
 					<p>
 						<span>You logged in as <b class="loginLabel"></b></span>
@@ -50,10 +85,12 @@
 					<button type="button" id="logout">Logout</button>
 				</form>
 
+				<p>&nbsp;</p>
+
 			</div>
 		</div>
 
-		<div class="page current" id="login">
+		<div class="page current" data-level="1" id="login">
 			<h1>Login</h1>
 
 			<div class="content">
@@ -72,16 +109,16 @@
 				</form>
 			</div>
 		</div>
-		<div class="page" id="news">
+		<div class="page" data-level="1" id="news">
 			<h1>News</h1>
 
 			<div class="content"></div>
 		</div>
-		<div class="page current" id="tracking">
+		<div class="page" data-level="1" id="tracking">
 			<h1>Tracking</h1>
 
 			<div class="content">
-				<form class="form">
+				<form class="form" action="" method="post">
 					<p style="overflow: hidden">
 						<label>From:</label><input placeholder="Date From" name="dateFrom" id="dateFrom" type="date" style="float: right">
 					</p>
@@ -91,35 +128,116 @@
 					<p>
 						<input placeholder="code" name="code" id="code">
 					</p>
-					<p>
+					<!--p>
 						<input placeholder="address" name="address" id="address">
-					</p>
+					</p-->
 					<div class="radios">
-						<div class="left checked" data-value="all">All</div>
-						<div class="center" data-value="delivered">Delivered</div>
-						<div class="right" data-value="undelivered">Undelivered</div>
-						<input type="hidden" name="orderType" id="orderType" value="all">
+						<div class="left checked" data-value="">All</div>
+						<div class="center" data-value="ONLY_DONE">Delivered</div>
+						<div class="right" data-value="ONLY_NOT_DONE">Undelivered</div>
+						<input type="hidden" name="orderType" id="orderType" value="">
 					</div>
+
 					<p>
 						<button type="submit">OK</button>
 					</p>
 
 				</form>
+
 			</div>
 		</div>
-		<div class="page" id="order">
+		<div class="page" data-level="1" id="order">
 			<h1>Order</h1>
 
-			<div class="content"></div>
+			<div class="content">
+				<form class="form" action="" method="post" >
+
+
+					<p>
+						<input type="text"  id="receiverCompanyName" placeholder="receiver Company name">
+					</p>
+					<p>
+						<input type="text"  id="receiverPersonName" placeholder="receiver Person name">
+					</p>
+					<p>
+						<input type="text"  id="receiverCity" placeholder="receiver city">
+					</p>
+					<p>
+						<input type="text"  id="receiverAddress" placeholder="receiver address">
+					</p>
+					<p>
+						<input type="text"  id="receiverPhone" placeholder="receiver phone">
+					</p>
+
+					<p>
+						<input type="text"  id="orderWeight" placeholder="Order weight">
+					</p>
+					<p>
+						<input type="text"  id="orderSum" placeholder="Order sum">
+					</p>
+					<p>
+						<input type="text"  id="orderAttach" placeholder="Attachment">
+					</p>
+					<p>
+						<input type="text"  id="orderComments" placeholder="Comments">
+					</p>
+					<p>
+						<input type="date"  id="receiveDate" placeholder="Receive date">
+					</p>
+
+					<button type="submit">send</button>
+
+					<p>&nbsp;</p>
+
+					
+				</form>
+			</div>
 		</div>
-		<div class="page" id="contacts">
+		<div class="page" data-level="1" id="contacts">
 			<h1>Contacts</h1>
 
-			<div class="content"></div>
+			<div class="content">
+				<p>
+					<a href="callto:+79267885763">+79267885763</a>
+				</p>
+				<form class="form" action="" method="post">
+					<p>
+						<input type="email" placeholder="Email">
+					</p>
+					<p>
+						<input type="tel" placeholder="Phone number">
+					</p>
+					<p>
+						<textarea style="border: 1px solid #660000;resize: none;width: 99%;height: 100px;" placeholder="Message"></textarea>
+					</p>
+					<button type="submit">send</button>
+				</form>
+			</div>
 		</div>
-		<div class="page" id="calculator">
+		<div class="page" data-level="1" id="calculator">
 			<h1>Calculator</h1>
 
+			<div class="content"></div>
+		</div>
+
+		<div class="page nopadding current" data-level="1" id="trackingResultsList">
+			<div class="menu">
+
+				<div class="item map"><i class="fa fa-location-arrow"></i></div>
+				<div class="item refresh"><i class="fa fa-repeat"></i></div>
+			</div>
+			<div class="wrap"></div>
+		</div>
+		<div class="page nopadding" data-level="1" id="trackingResultsMap">
+			<div class="menu">
+				<div class="item list"><i class="fa fa-list"></i></div>
+
+				<div class="item refresh"><i class="fa fa-repeat"></i></div>
+			</div>
+			<div class="wrap" id="googleMap"></div>
+		</div>
+		<div class="page fromRight" data-level="3" id="orderCard">
+			<h1></h1>
 			<div class="content"></div>
 		</div>
 
@@ -133,7 +251,7 @@
 	<div id="footer">
 		<ul class="mainMenu">
 			<li data-action="news"><a href="#"><i class="fa fa-2x fa-newspaper-o"></i><br>news</a></li>
-			<li class="active" data-action="tracking"><a href="#"><i class="fa fa-2x fa-map-marker"></i><br>tracking</a></li>
+			<li class="active" data-action="trackingResultsList"><a href="#"><i class="fa fa-2x fa-map-marker"></i><br>tracking</a></li>
 			<li data-action="order"><a href="#"><i class="fa fa-2x fa-file-text-o"></i><br>order</a></li>
 			<li data-action="contacts"><a href="#"><i class="fa fa-2x fa-envelope-o"></i><br>contacts</a></li>
 			<li data-action="calculator" class="last">
@@ -156,8 +274,10 @@
 </div>
 
 
-<!--script type="text/javascript" src="cordova.js"></script-->
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCwTbqI_TBGWpFC1u3Qf1S7CldaMqI7qXY&sensor=false"></script>
+<script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+
 <script type="text/javascript" src="js/index.js"></script>
 
 </body>
