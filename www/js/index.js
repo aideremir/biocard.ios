@@ -20,23 +20,26 @@
 
 var app = {
         apiURL: 'http://biocard.com/api/courierexe',
+        orders: [],
         // Application Constructor
         init: function () {
 
             this.dragging = false;
             var _this = this;
 
-            $("body").on("touchmove", function(){
+            $("body").on("touchmove", function () {
                 _this.dragging = true;
                 //console.log($('.page').scrollTop())
             });
-            $("body").on("touchstart", function(){
+            $("body").on("touchstart", function () {
                 _this.dragging = false;
             });
 
             this.spinner = $('#content .spinnerContainer');
             this.popup = $('#popup-container');
             this.extra = 13;
+
+            this.orders = [];
 
             this.hide(this.popup);
 
@@ -49,12 +52,10 @@ var app = {
             var $profileIcon = $('#header .profile');
 
             this.backButton = $('#header .back');
-            this.backButton.on('touchend', function()
-            {
+            this.backButton.on('touchend', function () {
                 var goto = $(this).attr('goto');
 
-                if(goto)
-                {
+                if (goto) {
                     _this.showPage(goto);
                 }
 
@@ -85,16 +86,13 @@ var app = {
                 _this = this;
 
 
-
-            $profileDataForm.on('submit', function(e)
-            {
+            $profileDataForm.on('submit', function (e) {
                 e.preventDefault();
-
 
 
                 var $form = $(this);
 
-                $form.find('input').each(function(){
+                $form.find('input').each(function () {
                     var $input = $(this);
 
                     console.log($input.attr('id'));
@@ -114,9 +112,7 @@ var app = {
                 pageLevel = $pageObj.data('level');
 
 
-
-            if(pageLevel > 1)
-            {
+            if (pageLevel > 1) {
                 _this.backButton.attr('goto', _this.currentPage).show();
             }
             else {
@@ -135,7 +131,7 @@ var app = {
 
                     $pageObj.find('.loginLabel').html(_this.login);
 
-                    $pageObj.find('#profileDataForm input').each(function(){
+                    $pageObj.find('#profileDataForm input').each(function () {
                         var $input = $(this);
 
                         $input.val(localStorage.getItem($input.attr('id')));
@@ -166,12 +162,13 @@ var app = {
                     break;
                 case 'trackingResultsMap':
 
-                    navigator.geolocation.getCurrentPosition(function(position){
+                    navigator.geolocation.getCurrentPosition(function (position) {
                         //console.log(position);
 
                         var lat = position.coords.latitude,
                             lon = position.coords.longitude,
-                            latLon = new google.maps.LatLng(lat, lon);
+                            latLon = new google.maps.LatLng(lat, lon),
+                            bounds = new google.maps.LatLngBounds(latLon);
 
                         var options = {
                             center: latLon,
@@ -179,11 +176,68 @@ var app = {
                             mapTypeId: google.maps.MapTypeId.ROADMAP
                         }
 
+                        if(_this.map)
+                        {
+                            return false;
+                        }
+
+
                         _this.map = new google.maps.Map(document.getElementById('googleMap'), options);
 
+                        google.maps.event.addListenerOnce(_this.map, 'idle', function () {
+                            //map loaded fully
+
+                            myMarker = new google.maps.Marker({
+                                position: latLon,
+                                title: 'I am here',
+                                map: _this.map,
+                                icon: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png',
+                                draggable: false
+                            }),
 
 
-                    }, function(error){
+                            $.each(_this.orders, function (key, order) {
+                                var orderLatLon = new google.maps.LatLng(order.lat, order.lon),
+
+                                    orderMarker = new google.maps.Marker({
+                                        position: orderLatLon,
+                                        title: order.orderno,
+                                        map: _this.map,
+                                        //icon: 'http://www.google.com/mapfiles/marker' + markerSymbol + '.png',
+                                        draggable: false
+                                    }),
+                                    /*
+                                    infoCenter = new google.maps.InfoWindow({
+                                        content: order.orderno
+                                    }),
+                                    */
+                                    circle = new google.maps.Circle({
+                                        map: _this.map,
+                                        clickable: false,
+                                        // metres
+                                        radius: order.accuracy,
+                                        fillColor: '#fff',
+                                        fillOpacity: .6,
+                                        strokeColor: '#313131',
+                                        strokeOpacity: .4,
+                                        strokeWeight: .8
+                                    });
+
+                                // attach circle to marker
+                                circle.bindTo('center', orderMarker, 'position');
+
+                                google.maps.event.addListener(orderMarker, 'click', order.onTouch);
+
+                                bounds.extend(orderMarker.getPosition());
+
+                            })
+
+                            _this.map.fitBounds(bounds);
+
+                        });
+
+
+                    }, function (error) {
                         console.log(error);
                     })
 
@@ -194,15 +248,11 @@ var app = {
 
                     var $searchResults = $('#trackingResultsList .wrap');
 
-                    if($searchResults.html() !== '')
-                    {
+                    if ($searchResults.html() !== '') {
                         return false;
                     }
 
                     _this.loadOrders();
-
-
-
 
 
                     break;
@@ -216,7 +266,7 @@ var app = {
         },
 
 
-        loadOrders: function() {
+        loadOrders: function () {
 
             var $searchResults = $('#trackingResultsList .wrap'),
                 _this = this;
@@ -227,7 +277,7 @@ var app = {
                 '<orderno></orderno>' +
                 '<datefrom></datefrom>' +
                 '<dateto></dateto>' +
-                '<done></done>' +
+                '<done>ONLY_NOT_DONE</done>' +
                 '</statusreq>';
 
             _this.apiSend(xml, function (data) {
@@ -246,12 +296,11 @@ var app = {
 
                 $orders.each(function () {
                     var $order = $(this),
+                        order = {},
                         $orderItem = $('<div class="orderItem" data-orderno="' + $order.attr('orderno') + '"><span class="orderNo">' + $order.attr('orderno') + '</span>&nbsp;<span class="toCompany">' + $order.find('receiver company').text() + '</span><i class="fa fa-chevron-right"></i></div>');
 
-                    $orderItem.on('touchend', function()
-                    {
-                        if(_this.dragging)
-                        {
+                    var orderTouch = function () {
+                        if (_this.dragging) {
                             return false;
                         }
 
@@ -271,12 +320,18 @@ var app = {
                         _this.showPage('orderCard');
 
 
-                    })
+                    }
+
+                    order = {orderno: $order.attr('orderno'), lat: $order.find('currcoords').attr('lat') || 55.75393, lon: $order.find('currcoords').attr('lon') || 37.620795, accuracy: $order.find('currcoords').attr('accuracy') || 6, onTouch: orderTouch}
+
+                    _this.orders.push(order);
+
+                    $orderItem.on('touchend', orderTouch);
 
                     $searchResults.append($orderItem);
 
-                })
 
+                })
 
 
             })
@@ -308,13 +363,13 @@ var app = {
                 $item.siblings('#orderType').val($item.data('value'));
             })
 
-            $(document).on('touchend', '.page .menu .list', function(){
+            $(document).on('touchend', '.page .menu .list', function () {
                 _this.showPage('trackingResultsList');
             });
-            $(document).on('touchend', '.page .menu .map', function(){
+            $(document).on('touchend', '.page .menu .map', function () {
                 _this.showPage('trackingResultsMap');
             });
-            $(document).on('touchend', '.page .menu .refresh', function(){
+            $(document).on('touchend', '.page .menu .refresh', function () {
 
                 console.log('refresh');
                 _this.loadOrders();
@@ -473,10 +528,10 @@ var app = {
                 //_this.hide(_this.spinner);
                 _this.spinner.hide();
 
-                for (i = 0; i < data.entries.length; i++) {
-                    item = data.entries[i];
+                for (i = 0; i < data.data.length; i++) {
+                    item = data.data[i];
 
-                    $container.append('<div class="item"><span class="date">' + _this.dateFormat(item.published) + '</span><h4>' + item.title + '</h4>' + item.content + '</div>');
+                    $container.append('<div class="item"><span class="date">' + _this.dateFormat(item.created_time) + '</span><h4>' + item.message + '</h4>' + (item.type == 'photo' ? '<img src="' + item.picture + '" />' : '') +'</div>');
                 }
 
             }).fail(function () {
@@ -524,3 +579,8 @@ var app = {
 $(document).ready(function () {
     app.init();
 })
+
+
+function nextChar(c) {
+    return String.fromCharCode(c.charCodeAt(0) + 1);
+}
