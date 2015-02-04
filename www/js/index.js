@@ -48,6 +48,7 @@ var app = {
             this.bindLoginEvents();
 
             this.bindFormSubmissions();
+            this.bindCityAutocomplete();
 
             var $profileIcon = $('#header .profile');
 
@@ -83,6 +84,8 @@ var app = {
         bindFormSubmissions: function () {
 
             var $profileDataForm = $('#profileDataForm'),
+                $orderForm = $('#order form'),
+                $contactForm = $('#contacts form'),
                 _this = this;
 
 
@@ -95,11 +98,86 @@ var app = {
                 $form.find('input').each(function () {
                     var $input = $(this);
 
-                    console.log($input.attr('id'));
+                    //console.log($input.attr('id'));
 
                     localStorage.setItem($input.attr('id'), $input.val());
                     _this[$input.attr('id')] = localStorage.getItem($input.attr('id'));
                 })
+
+                return false;
+            })
+
+            $orderForm.on('submit', function(e) {
+                e.preventDefault();
+
+                var xml = '<?xml version="1.0" encoding="UTF-8"?> \
+                        <neworder> \
+                            <auth extra="' + _this.extra + '" login="' + _this.login + '" pass="' + _this.password + '"></auth> \
+                            <order> \
+                                <barcode></barcode> \
+                                <sender> \
+                                    <company>' + localStorage.getItem('senderCompanyName') + '</company> \
+                                    <person>' + localStorage.getItem('senderPersonName') + '</person> \
+                                    <phone>' + localStorage.getItem('senderPhone') + '</phone>\
+                                    <town>' + localStorage.getItem('senderCity') + '</town>\
+                                    <address>' + localStorage.getItem('senderAddress') + '</address>\
+                                    <date>' + today()  + '</date>\
+                                    <time_min>09:00</time_min>\
+                                    <time_max>14:00</time_max>\
+                                </sender>\
+                                <receiver>\
+                                    <company>' + $('#receiverCompanyName').val() + '</company>\
+                                    <person>' + $('#receiverPersonName').val() + '</person>\
+                                    <phone>' + $('#receiverPhone').val() + '</phone>\
+                                    <zipcode></zipcode>\
+                                    <town>' + $('#receiverCity').val() + '</town>\
+                                    <address>' + $('#receiverAddress').val() + '</address>\
+                                    <date>' + $('#receiveDate').val() + '</date>\
+                                    <time_min>09:00</time_min>\
+                                    <time_max>19:00</time_max>\
+                                </receiver>\
+                                <return></return>\
+                                <return_service>1</return_service>\
+                                <weight>' + $('#orderWeight').val() + '</weight>\
+                                <quantity>' + $('#orderQuant').val() + '</quantity>\
+                                <paytype></paytype>\
+                                <service></service>\
+                                <price>' + $('#orderSum').val() + '</price>\
+                                <inshprice></inshprice>\
+                                <enclosure>' + $('#orderAttach').val() + '</enclosure>\
+                                <instruction>' + $('#orderComments').val() + '</instruction>\
+                            </order>\
+                        </neworder>';
+
+
+                _this.apiSend(xml, function(data)
+                {
+                    var status = $(data).find('createorder').attr('errormsg'),
+                        orderno = $(data).find('createorder').attr('orderno');
+
+                    if(status == 'success')
+                    {
+                        _this.showPopup('Order "' + orderno + '" created successfully');
+                    }
+
+                    else {
+                        _this.showPopup('Error "' + status + '" ');
+                    }
+
+                })
+
+                return false;
+            })
+
+            $contactForm.on('submit', function(e){
+                e.preventDefault();
+
+                $.post( "http://biocard.com/api/feedback", $contactForm.serialize())
+                    .done(function(data){
+
+                        _this.showPopup('Message sent! Thank you!');
+                        console.log(data);
+                    });
 
                 return false;
             })
@@ -155,6 +233,8 @@ var app = {
 
                         _this.showPage('login');
 
+                        $('#trackingResultsList .wrap').html('');
+                        _this.orders = [];
 
                         return false;
                     })
@@ -570,6 +650,15 @@ var app = {
             var date = new Date(date);
 
             return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + '&nbsp;' + date.getHours() + ':' + date.getMinutes();
+        },
+
+        bindCityAutocomplete: function() {
+            var $input = $('input.autocomplete');
+
+            $input.on('change', function(e)
+            {
+                console.log(e);
+            })
         }
 
 
@@ -583,4 +672,23 @@ $(document).ready(function () {
 
 function nextChar(c) {
     return String.fromCharCode(c.charCodeAt(0) + 1);
+}
+
+function today()
+{
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
+    }
+
+    if(mm<10) {
+        mm='0'+mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
 }

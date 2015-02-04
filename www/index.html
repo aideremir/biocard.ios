@@ -63,7 +63,7 @@
 					</p>
 					<p>
 						<label>Sender city</label>
-						<input type="text"  id="senderCity" placeholder="Sender city">
+						<input type="text"  id="senderCity" placeholder="Sender city" class="autocomplete">
 					</p>
 					<p>
 						<label>Sender address</label>
@@ -160,17 +160,20 @@
 						<input type="text"  id="receiverPersonName" placeholder="receiver Person name">
 					</p>
 					<p>
-						<input type="text"  id="receiverCity" placeholder="receiver city">
+						<input type="text"  id="receiverCity" placeholder="receiver city" class="autocomplete">
 					</p>
 					<p>
 						<input type="text"  id="receiverAddress" placeholder="receiver address">
 					</p>
 					<p>
-						<input type="text"  id="receiverPhone" placeholder="receiver phone">
+						<input type="tel"  id="receiverPhone" placeholder="receiver phone">
 					</p>
 
 					<p>
 						<input type="text"  id="orderWeight" placeholder="Order weight">
+					</p>
+					<p>
+						<input type="number"  id="orderQuant" placeholder="Items Quantity">
 					</p>
 					<p>
 						<input type="text"  id="orderSum" placeholder="Order sum">
@@ -202,13 +205,13 @@
 				</p>
 				<form class="form" action="" method="post">
 					<p>
-						<input type="email" placeholder="Email">
+						<input name="email" type="email" placeholder="Email">
 					</p>
 					<p>
-						<input type="tel" placeholder="Phone number">
+						<input name="phone" type="tel" placeholder="Phone number">
 					</p>
 					<p>
-						<textarea style="border: 1px solid #660000;resize: none;width: 99%;height: 100px;" placeholder="Message"></textarea>
+						<textarea name="message" style="border: 1px solid #660000;resize: none;width: 99%;height: 100px;" placeholder="Message"></textarea>
 					</p>
 					<button type="submit">send</button>
 				</form>
@@ -223,7 +226,7 @@
 		<div class="page nopadding current" data-level="1" id="trackingResultsList">
 			<div class="menu">
 
-				<div class="item map"><i class="fa fa-location-arrow"></i></div>
+				<div class="item map"><i class="fa fa-map-marker"></i></div>
 				<div class="item refresh"><i class="fa fa-repeat"></i></div>
 			</div>
 			<div class="wrap"></div>
